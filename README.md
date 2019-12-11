@@ -77,7 +77,6 @@ const endecryptor = new Endecryptor(secret, method, valid_request_TS_interval);
 // example in express server middleware:
 const decryptReqBody: RequestHandler = async (req, _res, next) => {
     const hmac = req.header('Authorization');
-    endecryptor.decryptAndValidateTS(req.body, hmac);
     if (endecryptor.decryptAndValidateTS(req.body, hmac)) {
         req.body = endecryptor.temp_decrypted; // decrypted body
         next();
