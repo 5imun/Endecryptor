@@ -107,21 +107,3 @@ export class Endecryptor{
     }
 
 }
-
-const secret = 'hxXxVEVNa3S6OQdgltNoDkbZ10b0MkQV';
-const method = 'AES-256-CBC';
-const valid_request_TS_interval = 100; // in seconds
-const endecryptor = new Endecryptor(secret, method, valid_request_TS_interval);
-
-// listen for encrypted request and store encrypted message and hmac stirngs
-// example with express middleware:
-const decryptReqBody: RequestHandler = async (req, _res, next) => {
-    const hmac = req.header('Authorization');
-    endecryptor.decryptAndValidateTS(req.body, hmac);
-    if (endecryptor.decryptAndValidateTS(req.body, hmac)) {
-      req.body = endecryptor.temp_decrypted;
-      next();
-    }
-  };
-
-endecryptor
